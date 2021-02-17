@@ -1,8 +1,13 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
+const Employee = require("./lib/Employee");
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
 
+var employees =[];
 
-const addPerson = () => {
+function addPerson() {
     inquirer.prompt([
         {
             type: 'list',
@@ -36,36 +41,8 @@ const addPerson = () => {
                     
                 },
             ]).then (response =>{
-                contentE = `
-                    <div class="justify-content-center">
-                        <div class="card shadow border-light" style="max-width: 15rem;">
-                            <div class="card-header bg-primary">
-                                <h4>${response.engineer}</h4>
-                                <h4> 
-                                <i class="fa fa-gear"></i>
-                                Engineer 
-                                </h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="card" style="width: 12rem;">
-                                    <ul class="list-group list-group-light">
-                                    <li class="list-group-item">ID: ${response.engineerId} </li>
-                                    <li class="list-group-item">Email: 
-                                        <a href= "mailto:${response.engineerEmail}">${response.engineerEmail}</a>
-                                    </li>
-                                    <li class="list-group-item">Github: 
-                                        <a href="https://github.com/${response.engineerUser}">${response.engineerUser}</a>
-                                    </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `
-                fs.appendFile("team.html", contentE, err => {
-                    if(err) console.log(err);
-                    else console.log("success!");
-                });
+                newEngineer = new Engineer(response.engineer, response.engineerId, response.engineerEmail, response.engineerUser);          
+                employees.push(newEngineer);
                 addPerson();
             })
         }else if(response.type === "Intern"){
@@ -92,46 +69,15 @@ const addPerson = () => {
                     
                 }
             ]).then (response =>{
-                contentI = `
-                    <div class="justify-content-center">
-                        <div class="card shadow border-light" style="max-width: 15rem;">
-                            <div class="card-header bg-primary">
-                                <h4>${response.intern}</h4>
-                                <h4><i class='fa fa-graduation-cap'></i>Intern </h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="card" style="width: 12rem;">
-                                    <ul class="list-group list-group-light">
-                                    <li class="list-group-item">ID: ${response.internID} </li>
-                                    <li class="list-group-item">Email: 
-                                        <a href= "mailto:${response.internEmail}">${response.internEmail}</a>
-                                    </li>
-                                    <li class="list-group-item">School: ${response.internSchool}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `
+                newIntern = new Intern(response.intern, response.internID, response.internEmail, response.internSchool); 
+                employees.push(newIntern);
                 addPerson();
-                fs.appendFile("team.html", contentI, err => {
-                    if(err) console.log(err);
-                    else console.log("success!");
-                });
-                
+
             })
         }else {
-                contentL = `
-                </section>
-            
-        </body>
-        </html>
-                `
-                fs.appendFile("team.html", contentL, err => {
-                    if(err) console.log(err);
-                    else console.log("success!");
-                });
-                
+            console.log(employees);
+
+            websitePart1();                  
             }
     });
 };
@@ -158,7 +104,15 @@ inquirer.prompt([
     name: "managerNumber"
 }
 ]).then (response => {
-    const contentHTML = `
+    
+    newManager = new Manager(response.manager, response.managerId, response.managerEmail, response.managerNumber);
+    employees.push(newManager);
+    addPerson();
+});
+
+var websitePart1 = () => {
+
+const contentHTML = `
     <!DOCTYPE html>
     <html lang="en">
       <head>
@@ -178,17 +132,17 @@ inquirer.prompt([
                 <div class="justify-content-center">
                     <div class="card shadow border-light" style="max-width: 15rem;">
                         <div class="card-header bg-primary">
-                            <h4>${response.manager}</h4>
+                            <h4>${employees[0].name}</h4>
                             <h4> <i class="fa fa-coffee"></i> Manager </h4>
                         </div>
                         <div class="card-body">
                             <div class="card" style="width: 12rem;">
                                 <ul class="list-group list-group-light">
-                                  <li class="list-group-item">ID: ${response.managerId} </li>
+                                  <li class="list-group-item">ID: ${employees[0].id} </li>
                                   <li class="list-group-item">Email: 
-                                      <a href= "mailto:${response.managerEmail}">${response.managerEmail}</a>
+                                      <a href= "mailto:${employees[0].email}">${employees[0].email}</a>
                                   </li>
-                                  <li class="list-group-item">Office Number: ${response.managerNumber}</li>
+                                  <li class="list-group-item">Office Number: ${employees[0].officeNumber}</li>
                                 </ul>
                             </div>
                         </div>
@@ -251,16 +205,89 @@ inquirer.prompt([
     }    
     `;
 
-    fs.writeFile("team.html", contentHTML, err => {
+    fs.writeFile("./dist/team.html", contentHTML, err => {
         if(err) console.log(err);
     });
 
-    fs.writeFile("style.css", contentCSS, err => {
-        if(err) console.log(err);
-         
+    fs.writeFile("./dist/style.css", contentCSS, err => {
+        if(err) console.log(err); 
     });
 
-    addPerson ();
-       
+    websitePart2();
+}
 
-});
+
+var websitePart2 = () => {
+
+    for (let i = 1; i<employees.length; i++){
+        if (employees[i].constructor.name === "Engineer") {
+            contentE = `
+                    <div class="justify-content-center">
+                        <div class="card shadow border-light" style="max-width: 15rem;">
+                            <div class="card-header bg-primary">
+                                <h4>${employees[i].name}</h4>
+                                <h4> 
+                                <i class="fa fa-gear"></i>
+                                Engineer 
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="card" style="width: 12rem;">
+                                    <ul class="list-group list-group-light">
+                                    <li class="list-group-item">ID: ${employees[i].id} </li>
+                                    <li class="list-group-item">Email: 
+                                        <a href= "mailto:${employees[i].email}">${employees[i].email}</a>
+                                    </li>
+                                    <li class="list-group-item">Github: 
+                                        <a href="https://github.com/${employees[i].github}">${employees[i].github}</a>
+                                    </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            fs.appendFile("./dist/team.html", contentE, err => {
+                if(err) console.log(err);
+            });
+            console.log("engineer");
+
+        }else if (employees[i].constructor.name === "Intern"){
+            contentI = `
+                    <div class="justify-content-center">
+                        <div class="card shadow border-light" style="max-width: 15rem;">
+                            <div class="card-header bg-primary">
+                                <h4>${employees[i].name}</h4>
+                                <h4><i class='fa fa-graduation-cap'></i>Intern </h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="card" style="width: 12rem;">
+                                    <ul class="list-group list-group-light">
+                                    <li class="list-group-item">ID: ${employees[i].id} </li>
+                                    <li class="list-group-item">Email: 
+                                        <a href= "mailto:${employees[i].email}">${employees[i].email}</a>
+                                    </li>
+                                    <li class="list-group-item">School: ${employees[i].school}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            fs.appendFile("./dist/team.html", contentI, err => {
+                if(err) console.log(err);
+            });
+            console.log("intern");
+        }else { 
+        }
+    }
+    contentL = `
+          
+    </body>
+    </html>
+            `
+        fs.appendFile("./dist/team.html", contentL, err => {
+            if(err) console.log(err);
+            else console.log("success!");
+        });
+};
