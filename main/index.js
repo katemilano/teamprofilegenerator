@@ -75,8 +75,6 @@ function addPerson() {
 
             })
         }else {
-            console.log(employees);
-
             websitePart1();                  
             }
     });
@@ -250,7 +248,6 @@ var websitePart2 = () => {
             fs.appendFile("./dist/team.html", contentE, err => {
                 if(err) console.log(err);
             });
-            console.log("engineer");
 
         }else if (employees[i].constructor.name === "Intern"){
             contentI = `
@@ -277,7 +274,6 @@ var websitePart2 = () => {
             fs.appendFile("./dist/team.html", contentI, err => {
                 if(err) console.log(err);
             });
-            console.log("intern");
         }else { 
         }
     }
