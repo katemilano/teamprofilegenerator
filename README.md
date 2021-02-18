@@ -14,6 +14,8 @@ This application allows you to create a webpage for your work team.  You will be
 
 * [Video](#video)
 
+* [Tests](#tests)
+
 * [License](#license)
 
 * [Contribution](#contribution)
@@ -28,9 +30,19 @@ npm i
 ```
 
 ## Photos
+Running through the terminal questions
+<img src="images/app.png">
 
+What the webpage will look like
+<img src="images/webpage.png">
 
 ## Video
+
+## Tests
+
+```bash
+npm run test
+```
 
 ## License
 
