@@ -1,0 +1,54 @@
+
+    h1{
+        color: white;
+        margin-left: 40%;
+        padding: 50px;
+        font-size: 35px;
+    }
+    
+    header{
+        background: rgb(121, 173, 241);  
+    }
+    
+    .whole{
+    margin-left: 50px;
+    margin-right: 50px;
+    }
+    
+    .shadow{
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        margin-top: 40px;
+        margin-bottom: 40px;
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 0;
+    }
+    
+    h4{
+        color: white;
+    
+    }
+    
+    p{
+        font-size: 15px;
+    }
+    
+    ul{
+        font-size: 12px;
+    }
+    
+    .shadow:first-child {
+        float: left;
+        margin-left: 80px;
+    }
+    
+    .shadow:nth-child(4n) {
+        float: right;
+        margin-right: 80px;
+    }
+        
+    .shadow:nth-child(4n+1) {
+        float: left;
+        margin-left: 80px;
+    }    
+    
