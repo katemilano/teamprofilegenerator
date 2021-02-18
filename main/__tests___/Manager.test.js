@@ -1,32 +1,44 @@
-const { identifier } = require("@babel/types");
-const { describe } = require("yargs");
 const Employee = require("../lib/Employee");
+const Manager = require("../lib/Manager");
 
-test("Can instantiate Manager instance", () => {
-    const m = new Manager();
-    expect(typeof(m)).toBe("object");
+describe('Intern', () => {
+    it('should create an object', () => {
+        const result = new Manager();
+        expect(typeof(result)).toBe("object");
+    });
 });
 
-test("Can set name via constructor arguments", () => {
-    const name = "Kate";
-    const m = new Manager(name);
-    expect(m.name).toBe(name);
+describe('Kate', () => {
+    it('should set the name to Kate', () => {
+        const name = 'Kate';
+        const obj = new Manager(name);
+        expect((obj.name)).toEqual(name);
+    });
 });
 
-test("Can set id via constructor arguments", () => {
-    const id = "1";
-    const m = new Manager(id);
-    expect(m.id).toBe(id);
+describe('Id', () => {
+    it('should set the id to 12', () => {
+        const id = "12";
+        const obj = new Manager(name, id);
+        expect((obj.id)).toEqual(id);
+    });
 });
 
-test("Can set email via constructor arguments", () => {
-    const email = "camilano@ncsu.edu";
-    const m = new Manager(email);
-    expect(m.email).toBe(email);
+describe('email', () => {
+    it('should set the email to catherine.ann.milano@gmail.com', () => {
+        const id = "12";
+        const email = "catherine.ann.milano@gmail.com";
+        const obj = new Manager(name, id, email);
+        expect((obj.email)).toEqual(email);
+    });
 });
 
-test("Can set officeNumber via constructor arguments", () => {
-    const officeNumber = "9999999999";
-    const m = new Manager(officeNumber);
-    expect(m.officeNumber).toBe(officeNumber);
+describe('Office Number', () => {
+    it('should set the github to katemilano', () => {
+        const id = "12";
+        const email = "catherine.ann.milano@gmail.com";
+        const officeNumber = "0000000000";
+        const obj = new Manager(name, id, email, officeNumber);
+        expect((obj.officeNumber)).toEqual(officeNumber);
+    });
 });
