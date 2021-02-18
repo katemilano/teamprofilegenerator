@@ -1,4 +1,4 @@
-# teamprofilegenerator
+# Team Profile Generator
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -37,6 +37,8 @@ What the webpage will look like
 <img src="images/webpage.png">
 
 ## Video
+Step through video demo
+https://drive.google.com/file/d/1X1j_ByFM7VRCPjolzLrRigcmHh0NdahG/view?usp=sharing
 
 ## Tests
 
